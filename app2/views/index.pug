@@ -3,8 +3,8 @@ html
   head
     link(href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet')
   body
-    include ./header.pug
+    div.header
+      h3 EPL Teams 2017
     div.container-fluid
       for team in teams
         div.row #{team}
-    include /form.pug

@@ -1,0 +1,14 @@
+doctype html
+html
+  head
+    link(href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet')
+  body
+    h3 FILE UPLOAD EXAMPLE
+    div
+      form(action='/upload' method='POST' enctype='multipart/form-data')
+        div
+          input(type='text' placeholder='Name' name='name')
+        div
+          input(type='file' name='image')
+        div
+          input(type='submit')

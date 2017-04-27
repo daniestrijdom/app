@@ -1,4 +1,3 @@
-// middleware file?
 
 var Koa = require('koa')
 var Router = require('koa-router')
@@ -12,30 +11,42 @@ var pug = new Pug({
   app: app
 })
 
-//
-var mod1 = require('./module1')
+// INDEX PAGE
+var mod1 = require('./modules/epl_teams')
 router.get('/index', async function(ctx){
   ctx.render('index', {teams: mod1.teams})
 })
 
 
+// FORM PAGE
 // going to do the FORMS part of the tutorial here.
 var bodyParser = require('koa-body')
 
 app.use(bodyParser({
-  formidable:{unploadDir:'./uploads'},
+  formidable:{uploadDir:'./uploads'},
   multipart: true,
-  urlencoded: true
+  urlencoded: true,
 }))
 
 router.get('/form', async function renderForm(ctx) {
   ctx.render('form')
 })
+
 router.post('/form', async function handleForm(ctx) {
   ctx.body = ctx.request.body
-
 })
 
+// UPLOAD PAGE
+
+router.get('/upload', async function renderUpload(ctx) {
+  ctx.render('upload')
+})
+
+router.post('/upload', async function handleUpload(ctx) {
+  console.log(ctx.request.body.fields)
+  console.log(ctx.request.body.files)
+  ctx.body = ctx.request.body.files
+})
 
 // routes, port and listen - keeping this at the end
 app.use(router.routes())
