@@ -19,7 +19,6 @@ router.get('/index', async function(ctx){
 
 
 // FORM PAGE
-// going to do the FORMS part of the tutorial here.
 var bodyParser = require('koa-body')
 
 app.use(bodyParser({
@@ -37,7 +36,6 @@ router.post('/form', async function handleForm(ctx) {
 })
 
 // UPLOAD PAGE
-
 router.get('/upload', async function renderUpload(ctx) {
   ctx.render('upload')
 })
@@ -47,6 +45,10 @@ router.post('/upload', async function handleUpload(ctx) {
   console.log(ctx.request.body.files)
   ctx.body = ctx.request.body.files
 })
+
+//STATIC DATA - IMAGES
+var serve = require('koa-static')
+app.use(serve('./static/images'))
 
 // routes, port and listen - keeping this at the end
 app.use(router.routes())
