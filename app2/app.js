@@ -50,6 +50,25 @@ router.post('/upload', async function handleUpload(ctx) {
 var serve = require('koa-static')
 app.use(serve('./static/images'))
 
+// COOKIES & SESSIONS
+router.get('/addcookie', async function setCookie(ctx){
+  ctx.cookies.set('im','watchingyou', {
+    httpOnly:false,
+    expires: new Date(Date.now() + 250000)
+  })
+  ctx.body = `cookie has been set`
+})
+
+var session = require('koa-session')
+app.keys = [`secret key for user`]
+app.use(session(app))
+app.use(async function sessionHandler(ctx){
+  var n = ctx.session.views || 0
+  // ++n yields value for n after it has been incremented
+  ctx.session.views = ++n
+  console.log(`page has been viewed ${n} times`)
+})
+
 // routes, port and listen - keeping this at the end
 app.use(router.routes())
 var port = process.argv[2]
