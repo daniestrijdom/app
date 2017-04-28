@@ -58,16 +58,17 @@ router.get('/addcookie', async function setCookie(ctx){
   })
   ctx.body = `cookie has been set`
 })
-
-var session = require('koa-session')
-app.keys = [`secret key for user`]
-app.use(session(app))
-app.use(async function sessionHandler(ctx){
-  var n = ctx.session.views || 0
-  // ++n yields value for n after it has been incremented
-  ctx.session.views = ++n
-  console.log(`page has been viewed ${n} times`)
-})
+//
+// var session = require('koa-session')
+// // what is this doing?
+// app.keys = [`secret key for user`]
+// app.use(session(app))
+// app.use(async function sessionHandler(ctx, next){
+//   var n = ctx.session.views || 0
+//   // ++n yields value for n after it has been incremented
+//   ctx.session.views = ++n
+//   console.log(`page has been viewed ${n} times`)
+// })
 
 // routes, port and listen - keeping this at the end
 app.use(router.routes())

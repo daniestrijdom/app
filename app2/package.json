@@ -1,7 +1,7 @@
 {
   "name": "koa_nodeschool",
   "version": "1.0.0",
-  "description": "nodeschool koa workshopper",
+  "description": "tutorialspoint koa examples",
   "main": "program.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
