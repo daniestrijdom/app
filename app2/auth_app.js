@@ -1,9 +1,9 @@
-// NB: I have ommitted the error-handling middleware for now
 // Added koa-mount which will essiantially log me in
 
 var Koa = require('koa')
 var Router = require('koa-router')
 var auth = require('koa-basic-auth')
+var mount = require('koa-mount')
 
 var app = new Koa()
 var router = new Router()
@@ -13,7 +13,25 @@ var credentials = {
   pass: 'Strijdom'
 }
 
-app.use(auth(credentials))
+// Left this out initially but this.set possibly required for it all to work
+// not happy with this since I have been trying to avoid generator functions
+// but not sure how to make it work without them
+
+app.use(function *handleError(next) {
+  try {
+    yield next
+  } catch (err) {
+    if (401 === err.status) {
+      this.status = 401
+      this.set('WWW-Authenticate', 'Basic')
+      this.body = 'get out intruder!'
+    } else {
+      throw err
+    }
+  }
+})
+
+app.use(mount('/loggedin',auth(credentials)))
 
 router.get('/loggedin', auth(credentials), async function secureAccess(ctx){
   ctx.body = `User ${credentials.name} is authorised`
